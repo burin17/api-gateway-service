@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: api-gateway-service
+
+server:
+  port: 18080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18761/eureka/
+    fetch-registry: true
+    registerWithEureka: true
+  instance:
+    preferIpAddress: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+zuul:
+  routes:
+    crud-service:
+      path: /api/users/**
+      serviceId: crud-service
+      stripPrefix: false
+    jwt-issuer:
+      path: /auth
+      serviceId: jwt-issuer-service
+      stripPrefix: false
+    fundraising-logic-service-refister:
+      path: /register
+      serviceId: fundraising-logic-service
+      stripPrefix: false
+    fundraising-logic-service-user-communication:
+      path: /user/**
+      serviceId: fundraising-logic-service
+      stripPrefix: false
+    fundraising-logic-servic-fp:
+      path: /fundraising-projects/**
+      serviceId: fundraising-logic-service
+      stripPrefix: false
+    moderation-service:
+      path: /moderation/**
+      serviceId: moderation-service
+      stripPrefix: false
+    payout-request:
+      path: /payout-requests/**
+      serviceId: fundraising-logic-service
+      stripPrefix: false
+
+ribbon:
+  ReadTimeout: 100000
