@@ -50,6 +50,10 @@ zuul:
       path: /payout-requests/**
       serviceId: fundraising-logic-service
       stripPrefix: false
+    invested-fundraising-projects:
+      path: /invested-fundraising-projects
+      serviceId: fundraising-logic-service
+      stripPrefix: false
 
 ribbon:
   ReadTimeout: 100000
