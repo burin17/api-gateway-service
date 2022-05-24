@@ -1,6 +1,10 @@
 spring:
   application:
     name: api-gateway-service
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
 
 server:
   port: 18080
@@ -24,6 +28,10 @@ zuul:
   routes:
     crud-service:
       path: /api/users/**
+      serviceId: crud-service
+      stripPrefix: false
+    crud-service-fp:
+      path: /api/fundraising-projects/**
       serviceId: crud-service
       stripPrefix: false
     jwt-issuer:
@@ -50,10 +58,19 @@ zuul:
       path: /payout-requests/**
       serviceId: fundraising-logic-service
       stripPrefix: false
+    api-payout-request:
+      path: /api/payout-requests/**
+      serviceId: crud-service
+      stripPrefix: false
     invested-fundraising-projects:
       path: /invested-fundraising-projects
       serviceId: fundraising-logic-service
       stripPrefix: false
+    tech-support:
+      path: /tech-support/**
+      serviceId: crud-service
+      stripPrefix: false
+
 
 ribbon:
   ReadTimeout: 100000

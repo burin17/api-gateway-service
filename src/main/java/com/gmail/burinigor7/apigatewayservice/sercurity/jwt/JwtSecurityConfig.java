@@ -40,9 +40,13 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/moderation/**")
+                .antMatchers("/moderation/**", "/tech-support/start-support",
+                        "/tech-support/all-chats", "/tech-support/unassigned-chats", "/user/piece",
+                        "/user/investments/**")
                 .hasRole("ADMIN")
-                .antMatchers("/auth", "/register", "/fundraising-projects/visibleForUser")
+                .antMatchers("/auth", "/register", "/fundraising-projects/**", "/payout-requests/**",
+                        "/api/fundraising-projects/moderation-files/**", "/api/fundraising-projects/image-files/**",
+                        "/api/fundraising-projects/other-files/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -54,7 +58,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     public FilterRegistrationBean<UnauthorizedExceptionHandlerFilter> someFilterRegistration() {
         FilterRegistrationBean<UnauthorizedExceptionHandlerFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new UnauthorizedExceptionHandlerFilter());
-        registration.addUrlPatterns("/*");;
+        registration.addUrlPatterns("/*");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registration;
     }
